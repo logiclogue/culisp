@@ -1,3 +1,6 @@
+#include <assert.h>
+#include <stdlib.h>
+#include <stdbool.h>
 #include "cons.h"
 
 struct _Cons {
@@ -14,7 +17,7 @@ Cons *cons_new(char value, Cons *cons) {
     return self;
 }
 
-Cons *from_string(char *s) {
+Cons *cons_from_string(char *s) {
     Cons *string = NULL;
     Cons *previous_char = NULL;
     Cons *current_char = NULL;
@@ -34,4 +37,25 @@ Cons *from_string(char *s) {
     }
 
     return string;
+}
+
+void destroy_cons(Cons *cons) {
+    if (cons == NULL) {
+        return;
+    }
+
+    destroy_cons(cons->cdr);
+    free(cons);
+}
+
+char cons_head(Cons *cons) {
+    if (cons == NULL) {
+        return '\0';
+    }
+
+    return cons->car;
+}
+
+void cons_test(void) {
+    assert(cons_head(cons_from_string("Jordan")) == 'J');
 }

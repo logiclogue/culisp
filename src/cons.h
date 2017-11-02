@@ -1,6 +1,8 @@
 #ifndef CONS_H
 #define CONS_H
 
+#include <stdbool.h>
+
 typedef struct _Cons Cons;
 
 Cons *cons_new(char value, Cons *cons);
