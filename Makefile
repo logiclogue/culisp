@@ -5,19 +5,15 @@ LDFLAGS=
 DIRBUILD=build
 DIRSRC=src
 SOURCES=$(shell ls $(DIRSRC)/*.c)
-OBJECTS=$(SOURCES:.c=.o)
-EXECUTABLES=$(DIRBUILD)/main
+EXECUTABLE=$(DIRBUILD)/culisp
 
-all: $(SOURCES) $(DIRBUILD)/main
+all: $(SOURCES) $(EXECUTABLE)
 
-$(EXECUTABLES): $(OBJECTS)
+$(EXECUTABLE):
 	mkdir -p $(DIRBUILD)
-	$(CC) $(LDFLAGS) $(OBJECTS) -o $@
-
-.c.o:
-	$(CC) $(BUILDFLAGS) $(CFLAGS) $< -o $@
+	$(CC) $(LDFLAGS) $(SOURCES) -o $(EXECUTABLE)
 
 clean:
-	rm $(OBJECTS) $(EXECUTABLE)
+	rm $(EXECUTABLE)
 
-.PHONY: clean all install $(DIRSRC)/main.c
+.PHONY: clean all $(DIRSRC)/main.c
