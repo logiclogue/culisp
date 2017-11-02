@@ -64,9 +64,22 @@ Cons *cons_tail(Cons *cons) {
     return cons->cdr;
 }
 
+char cons_item(int i, Cons *cons) {
+    if (cons == NULL) {
+        return '\0';
+    } else if (i == 0) {
+        return cons->car;
+    }
+
+    return cons_item(i - 1, cons->cdr);
+}
+
 void cons_test(void) {
     Cons *jordan = cons_from_string("Jordan");
 
     assert(cons_head(jordan) == 'J');
     assert(cons_head(cons_tail(jordan)) == 'o');
+    assert(cons_item(5, jordan) == 'n');
+    assert(cons_item(20, jordan) == '\0');
+    assert(cons_item(1, NULL) == '\0');
 }
