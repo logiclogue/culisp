@@ -56,6 +56,17 @@ char cons_head(Cons *cons) {
     return cons->car;
 }
 
+Cons *cons_tail(Cons *cons) {
+    if (cons == NULL) {
+        return NULL;
+    }
+
+    return cons->cdr;
+}
+
 void cons_test(void) {
-    assert(cons_head(cons_from_string("Jordan")) == 'J');
+    Cons *jordan = cons_from_string("Jordan");
+
+    assert(cons_head(jordan) == 'J');
+    assert(cons_head(cons_tail(jordan)) == 'o');
 }
