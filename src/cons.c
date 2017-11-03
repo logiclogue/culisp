@@ -114,6 +114,18 @@ Cons *cons_drop(int n, Cons *cons) {
     return cons_drop(n - 1, cons->cdr);
 }
 
+bool cons_equal(Cons *cons_a, Cons *cons_b) {
+    if (cons_a == NULL && cons_b == NULL) {
+        return true;
+    } else if (cons_a == NULL || cons_b == NULL) {
+        return false;
+    } else if (cons_a->car != cons_b->car) {
+        return false;
+    }
+
+    return cons_equal(cons_a->cdr, cons_b->cdr);
+}
+
 void cons_test(void) {
     Cons *jordan = cons_from_string("Jordan");
     Cons *j = cons_from_string("J");
@@ -132,4 +144,7 @@ void cons_test(void) {
     assert(cons_length(jordan) == 6);
     assert(cons_head(cons_drop(1, jordan)) == 'o');
     assert(cons_drop(100, NULL) == NULL);
+    assert(cons_equal(jordan, jordan));
+    assert(!cons_equal(j, jordan));
+    assert(cons_equal(NULL, NULL));
 }
