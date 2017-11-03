@@ -126,6 +126,14 @@ bool cons_equal(Cons *cons_a, Cons *cons_b) {
     return cons_equal(cons_a->cdr, cons_b->cdr);
 }
 
+Cons *cons_add(Cons *cons_a, Cons *cons_b) {
+    if (cons_a == NULL) {
+        return cons_b;
+    }
+
+    return cons_new(cons_a->car, cons_add(cons_a->cdr, cons_b));
+}
+
 void cons_test(void) {
     Cons *jordan = cons_from_string("Jordan");
     Cons *j = cons_from_string("J");
@@ -147,4 +155,5 @@ void cons_test(void) {
     assert(cons_equal(jordan, jordan));
     assert(!cons_equal(j, jordan));
     assert(cons_equal(NULL, NULL));
+    assert(cons_equal(cons_add(j, cons_from_string("ordan")), jordan));
 }
