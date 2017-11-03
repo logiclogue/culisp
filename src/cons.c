@@ -153,6 +153,14 @@ bool cons_is_white_space(char c) {
            c == 133 || c == 160;
 }
 
+Cons *cons_list(int n, Cons *cons) {
+    if (cons == NULL) {
+        return NULL;
+    } else if (cons_is_white_space(cons->car)) {
+        return cons->cdr;
+    }
+}
+
 void cons_test(void) {
     Cons *jordan = cons_from_string("Jordan");
     Cons *j = cons_from_string("J");
@@ -178,4 +186,7 @@ void cons_test(void) {
     assert(cons_equal(
         cons_trim(cons_from_string("  test  ")),
         cons_from_string("test")));
+    assert(cons_equal(
+        cons_list(1, "one  two three"),
+        cons_from_string("one")));
 }
