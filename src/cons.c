@@ -183,6 +183,10 @@ Cons *cons_list(int n, Cons *cons) {
     return cons_list(n, cons->cdr);
 }
 
+bool cons_is_empty(Cons *cons) {
+    return cons == NULL;
+}
+
 void cons_test(void) {
     Cons *jordan = cons_from_string("Jordan");
     Cons *j = cons_from_string("J");
@@ -211,4 +215,6 @@ void cons_test(void) {
     assert(cons_equal(
         cons_list(1, cons_from_string("one  two three")),
         cons_from_string("two")));
+    assert(cons_is_empty(cons_from_string("")));
+    assert(!cons_is_empty(cons_from_string("test")));
 }

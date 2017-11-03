@@ -23,5 +23,6 @@ Cons *cons_trim(Cons *cons);
 bool cons_is_white_space(char c);
 void cons_test(void);
 Cons *cons_list(int n, Cons *cons);
+bool cons_is_empty(Cons *cons);
 
 #endif
