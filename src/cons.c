@@ -74,6 +74,16 @@ char cons_item(int i, Cons *cons) {
     return cons_item(i - 1, cons->cdr);
 }
 
+char cons_last(Cons *cons) {
+    if (cons == NULL) {
+        return '\0';
+    } else if (cons->cdr == NULL) {
+        return cons->car;
+    }
+
+    return cons_last(cons->cdr);
+}
+
 void cons_test(void) {
     Cons *jordan = cons_from_string("Jordan");
 
@@ -82,4 +92,6 @@ void cons_test(void) {
     assert(cons_item(5, jordan) == 'n');
     assert(cons_item(20, jordan) == '\0');
     assert(cons_item(1, NULL) == '\0');
+    assert(cons_last(NULL) == '\0');
+    assert(cons_last(jordan) == 'n');
 }
