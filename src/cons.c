@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include "cons.h"
 
@@ -46,6 +47,19 @@ void destroy_cons(Cons *cons) {
 
     destroy_cons(cons->cdr);
     free(cons);
+}
+
+char *cons_to_string(Cons *cons) {
+    int len = cons_length(cons);
+    char *string = malloc(sizeof(char) * (len + 1));
+
+    for (int i = 0; i < len; i += 1) {
+        string[i] = cons_item(i, cons);
+    }
+
+    string[len] = '\0';
+
+    return string;
 }
 
 char cons_head(Cons *cons) {
@@ -156,9 +170,17 @@ bool cons_is_white_space(char c) {
 Cons *cons_list(int n, Cons *cons) {
     if (cons == NULL) {
         return NULL;
+    } else if (n == 0 && cons_is_white_space(cons->car)) {
+        return NULL;
+    } else if (n == 0) {
+        return cons_new(cons->car, cons_list(n, cons->cdr));
+    } else if (cons_is_white_space(cons->car) && cons_is_white_space(cons->cdr->car)) {
+        return cons_list(n, cons->cdr);
     } else if (cons_is_white_space(cons->car)) {
-        return cons->cdr;
+        return cons_list(n - 1, cons->cdr);
     }
+
+    return cons_list(n, cons->cdr);
 }
 
 void cons_test(void) {
@@ -187,6 +209,6 @@ void cons_test(void) {
         cons_trim(cons_from_string("  test  ")),
         cons_from_string("test")));
     assert(cons_equal(
-        cons_list(1, "one  two three"),
-        cons_from_string("one")));
+        cons_list(1, cons_from_string("one  two three")),
+        cons_from_string("two")));
 }
