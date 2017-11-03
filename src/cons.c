@@ -84,8 +84,31 @@ char cons_last(Cons *cons) {
     return cons_last(cons->cdr);
 }
 
+int cons_length(Cons *cons) {
+    if (cons == NULL) {
+        return 0;
+    }
+
+    return 1 + cons_length(cons->cdr);
+}
+
+Cons *cons_take(int n, Cons *cons) {
+    if (n <= 0) {
+        return NULL;
+    } else if (cons->cdr == NULL) {
+        return cons;
+    }
+
+    return cons_new(cons->car, cons_take(n - 1, cons->cdr));
+}
+
+Cons *cons_init(Cons *cons) {
+    return cons_take(cons_length(cons) - 1, cons);
+}
+
 void cons_test(void) {
     Cons *jordan = cons_from_string("Jordan");
+    Cons *j = cons_from_string("J");
 
     assert(cons_head(jordan) == 'J');
     assert(cons_head(cons_tail(jordan)) == 'o');
@@ -94,4 +117,9 @@ void cons_test(void) {
     assert(cons_item(1, NULL) == '\0');
     assert(cons_last(NULL) == '\0');
     assert(cons_last(jordan) == 'n');
+    assert(cons_last(cons_init(NULL)) == '\0');
+    assert(cons_last(cons_init(j)) == '\0');
+    assert(cons_last(cons_init(jordan)) == 'a');
+    assert(cons_last(cons_take(3, jordan)) == 'r');
+    assert(cons_length(jordan) == 6);
 }
