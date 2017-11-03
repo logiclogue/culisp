@@ -106,6 +106,14 @@ Cons *cons_init(Cons *cons) {
     return cons_take(cons_length(cons) - 1, cons);
 }
 
+Cons *cons_drop(int n, Cons *cons) {
+    if (cons == NULL || n == 0) {
+        return cons;
+    }
+
+    return cons_drop(n - 1, cons->cdr);
+}
+
 void cons_test(void) {
     Cons *jordan = cons_from_string("Jordan");
     Cons *j = cons_from_string("J");
@@ -122,4 +130,6 @@ void cons_test(void) {
     assert(cons_last(cons_init(jordan)) == 'a');
     assert(cons_last(cons_take(3, jordan)) == 'r');
     assert(cons_length(jordan) == 6);
+    assert(cons_head(cons_drop(1, jordan)) == 'o');
+    assert(cons_drop(100, NULL) == NULL);
 }
