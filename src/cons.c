@@ -134,6 +134,25 @@ Cons *cons_add(Cons *cons_a, Cons *cons_b) {
     return cons_new(cons_a->car, cons_add(cons_a->cdr, cons_b));
 }
 
+Cons *cons_trim(Cons *cons) {
+    if (cons == NULL) {
+        return NULL;
+    } else if (cons_is_white_space(cons->car)) {
+        return cons_trim(cons->cdr);
+    } else if (cons_is_white_space(cons_last(cons))) {
+        return cons_trim(cons_init(cons));
+    }
+
+    return cons;
+}
+
+bool cons_is_white_space(char c) {
+    return c == 9  || c == 10 ||
+           c == 11 || c == 12 ||
+           c == 13 || c == 32 ||
+           c == 133 || c == 160;
+}
+
 void cons_test(void) {
     Cons *jordan = cons_from_string("Jordan");
     Cons *j = cons_from_string("J");
@@ -156,4 +175,7 @@ void cons_test(void) {
     assert(!cons_equal(j, jordan));
     assert(cons_equal(NULL, NULL));
     assert(cons_equal(cons_add(j, cons_from_string("ordan")), jordan));
+    assert(cons_equal(
+        cons_trim(cons_from_string("  test  ")),
+        cons_from_string("test")));
 }

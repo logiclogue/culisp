@@ -18,9 +18,8 @@ Cons *cons_drop(int n, Cons *cons);
 int cons_length(Cons *cons);
 bool cons_equal(Cons *cons_a, Cons *cons_b);
 Cons *cons_add(Cons *cons_a, Cons *cons_b);
-//Cons *cons_map(char (*f)(char c), Cons *cons);
-//Cons *cons_trim(Cons *cons);
-//bool cons_is_white_space(char c);
+Cons *cons_trim(Cons *cons);
+bool cons_is_white_space(char c);
 void cons_test(void);
 
 #endif
