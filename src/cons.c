@@ -174,7 +174,8 @@ Cons *cons_list(int n, Cons *cons) {
         return NULL;
     } else if (n == 0) {
         return cons_new(cons->car, cons_list(n, cons->cdr));
-    } else if (cons_is_white_space(cons->car) && cons_is_white_space(cons->cdr->car)) {
+    } else if (cons_is_white_space(cons->car)
+            && cons_is_white_space(cons->cdr->car)) {
         return cons_list(n, cons->cdr);
     } else if (cons_is_white_space(cons->car)) {
         return cons_list(n - 1, cons->cdr);
