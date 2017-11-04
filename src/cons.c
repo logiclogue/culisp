@@ -56,6 +56,16 @@ char *cons_to_string(Cons *cons) {
     return string;
 }
 
+int cons_to_int(Cons *cons) {
+    char *string = cons_to_string(cons);
+
+    int value = atoi(string);
+
+    free(string);
+
+    return value;
+}
+
 char cons_head(Cons *cons) {
     if (cons == NULL) {
         return '\0';
@@ -242,4 +252,5 @@ void cons_test(void) {
     assert(!cons_is_last(cons_from_string("as")));
     assert(cons_all(cons_is_white_space, cons_from_string("   ")));
     assert(!cons_all(cons_is_white_space, cons_from_string(" a ")));
+    assert(cons_to_int(cons_from_string("123")) == 123);
 }

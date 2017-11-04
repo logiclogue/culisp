@@ -14,6 +14,7 @@ Cons *cons_new(char value, Cons *cons);
 Cons *cons_from_string(char *s);
 void destroy_cons(Cons *cons);
 char *cons_to_string(Cons *cons);
+int cons_to_int(Cons *cons);
 char cons_head(Cons *cons);
 Cons *cons_tail(Cons *cons);
 char cons_item(int i, Cons *cons);
