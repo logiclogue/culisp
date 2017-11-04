@@ -3,11 +3,6 @@
 #include "cons.h"
 #include "Result.h"
 
-struct _Result {
-    bool valid;
-    Cons *value;
-};
-
 Result Result_invalid(void) {
     return (Result) { false, NULL };
 }
