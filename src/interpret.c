@@ -20,9 +20,27 @@ Result interpret_number(Cons *cons) {
     return Result_invalid();
 }
 
+static bool is_alpha(char c) {
+    return (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z');
+}
+
+Result interpret_name(Cons *cons) {
+    if (cons_is_empty(cons)) {
+        return Result_invalid();
+    } else if (cons_all(is_alpha, cons)) {
+        return Result_valid(cons);
+    }
+
+    return Result_invalid();
+}
+
 void interpret_test(void) {
     assert(interpret_number(cons_from_string("123")).valid);
     assert(interpret_number(cons_from_string("-123")).valid);
     assert(!interpret_number(cons_from_string("a")).valid);
     assert(!interpret_number(cons_from_string("")).valid);
+    assert(interpret_name(cons_from_string("jordan")).valid);
+    assert(interpret_name(cons_from_string("JORDAN")).valid);
+    assert(!interpret_name(cons_from_string("j0rdan")).valid);
+    assert(!interpret_name(cons_from_string("")).valid);
 }

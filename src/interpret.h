@@ -5,6 +5,7 @@
 #include "cons.h"
 
 Result interpret_number(Cons *cons);
+Result interpret_name(Cons *cons);
 void interpret_test(void);
 
 #endif
