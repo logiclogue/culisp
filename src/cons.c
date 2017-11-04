@@ -1,5 +1,6 @@
 #include <assert.h>
 #include <stdlib.h>
+#include <stdio.h>
 #include <stdbool.h>
 #include "cons.h"
 
@@ -32,6 +33,18 @@ Cons *cons_from_string(char *s) {
     }
 
     return string;
+}
+
+Cons *cons_from_int(int i) {
+    char *output = malloc(sizeof(char) * 100);
+
+    sprintf(output, "%d", i);
+
+    Cons *cons = cons_from_string(output);
+
+    free(output);
+
+    return cons;
 }
 
 void destroy_cons(Cons *cons) {
@@ -253,4 +266,5 @@ void cons_test(void) {
     assert(cons_all(cons_is_white_space, cons_from_string("   ")));
     assert(!cons_all(cons_is_white_space, cons_from_string(" a ")));
     assert(cons_to_int(cons_from_string("123")) == 123);
+    assert(cons_equal(cons_from_int(123), cons_from_string("123")));
 }
