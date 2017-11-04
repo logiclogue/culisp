@@ -187,6 +187,28 @@ bool cons_is_empty(Cons *cons) {
     return cons == NULL;
 }
 
+bool cons_is_last(Cons *cons) {
+    if (cons_is_empty(cons)) {
+        return false;
+    } else if (cons_is_empty(cons->cdr)) {
+        return true;
+    }
+
+    return false;
+}
+
+bool cons_all(bool (*f)(char c), Cons *cons) {
+    if (cons_is_empty(cons)) {
+        return false;
+    } else if (cons_is_last(cons)) {
+        return f(cons->car);
+    } else if (!f(cons->car)) {
+        return false;
+    }
+
+    return cons_all(f, cons->cdr);
+}
+
 void cons_test(void) {
     Cons *jordan = cons_from_string("Jordan");
     Cons *j = cons_from_string("J");
@@ -220,4 +242,9 @@ void cons_test(void) {
         cons_from_string("")));
     assert(cons_is_empty(cons_from_string("")));
     assert(!cons_is_empty(cons_from_string("test")));
+    assert(!cons_is_last(cons_from_string("")));
+    assert(cons_is_last(cons_from_string("a")));
+    assert(!cons_is_last(cons_from_string("as")));
+    assert(cons_all(cons_is_white_space, cons_from_string("   ")));
+    assert(!cons_all(cons_is_white_space, cons_from_string(" a ")));
 }
