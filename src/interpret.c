@@ -9,6 +9,14 @@ static bool is_digit(char value) {
 }
 
 Result interpret_number(Cons *cons) {
+    if (cons_is_empty(cons)) {
+        return Result_invalid();
+    } else if (cons->car == '-' && cons_all(is_digit, cons->cdr)) {
+        return Result_valid(cons);
+    } else if (cons_all(is_digit, cons)) {
+        return Result_valid(cons);
+    }
+
     return Result_invalid();
 }
 

@@ -5,6 +5,11 @@
 
 typedef struct _Cons Cons;
 
+struct _Cons {
+    char car;
+    Cons *cdr;
+};
+
 Cons *cons_new(char value, Cons *cons);
 Cons *cons_from_string(char *s);
 void destroy_cons(Cons *cons);

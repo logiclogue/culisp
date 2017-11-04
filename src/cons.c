@@ -3,11 +3,6 @@
 #include <stdbool.h>
 #include "cons.h"
 
-struct _Cons {
-    char car;
-    Cons *cdr;
-};
-
 Cons *cons_new(char value, Cons *cons) {
     Cons *self = malloc(sizeof(Cons));
 
