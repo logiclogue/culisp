@@ -247,12 +247,6 @@ void cons_test(void) {
     assert(cons_equal(
         cons_trim(cons_from_string("  test  ")),
         cons_from_string("test")));
-    assert(cons_equal(
-        cons_list(1, cons_from_string("one  two three")),
-        cons_from_string("two")));
-    assert(cons_equal(
-        cons_list(1, cons_from_string("")),
-        cons_from_string("")));
     assert(cons_is_empty(cons_from_string("")));
     assert(!cons_is_empty(cons_from_string("test")));
     assert(!cons_is_last(cons_from_string("")));

@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include "Result.h"
 #include "cons.h"
+#include "cons_list.h"
 #include "interpret.h"
 #include "prelude.h"
 
@@ -59,10 +60,10 @@ Result interpret_function(Cons *cons) {
         return Result_invalid();
     }
 
-    if (cons_equal(cons_list(0, without_brackets), cons_from_string("add"))) {
-        return Result_valid(prelude_add(cons_list(1, without_brackets), cons_list(2, without_brackets)));
-    } else if (cons_equal(cons_list(0, without_brackets), cons_from_string("minus"))) {
-        return Result_valid(prelude_minus(cons_list(1, without_brackets), cons_list(2, without_brackets)));
+    if (cons_equal(cons_list_item(0, without_brackets), cons_from_string("add"))) {
+        return Result_valid(prelude_add(cons_list_item(1, without_brackets), cons_list_item(2, without_brackets)));
+    } else if (cons_equal(cons_list_item(0, without_brackets), cons_from_string("minus"))) {
+        return Result_valid(prelude_minus(cons_list_item(1, without_brackets), cons_list_item(2, without_brackets)));
     }
 
     return Result_invalid();
