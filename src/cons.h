@@ -11,6 +11,7 @@ struct _Cons {
 };
 
 Cons *cons_new(char value, Cons *cons);
+Cons *cons_empty(void);
 Cons *cons_from_string(char *s);
 Cons *cons_from_int(int i);
 void destroy_cons(Cons *cons);

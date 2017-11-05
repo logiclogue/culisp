@@ -13,6 +13,10 @@ Cons *cons_new(char value, Cons *cons) {
     return self;
 }
 
+Cons *cons_empty(void) {
+    return NULL;
+}
+
 Cons *cons_from_string(char *s) {
     Cons *string = NULL;
     Cons *previous_char = NULL;
@@ -48,7 +52,7 @@ Cons *cons_from_int(int i) {
 }
 
 void destroy_cons(Cons *cons) {
-    if (cons == NULL) {
+    if (cons_is_empty(cons)) {
         return;
     }
 
@@ -80,7 +84,7 @@ int cons_to_int(Cons *cons) {
 }
 
 char cons_head(Cons *cons) {
-    if (cons == NULL) {
+    if (cons_is_empty(cons)) {
         return '\0';
     }
 
@@ -88,15 +92,15 @@ char cons_head(Cons *cons) {
 }
 
 Cons *cons_tail(Cons *cons) {
-    if (cons == NULL) {
-        return NULL;
+    if (cons_is_empty(cons)) {
+        return cons_empty();
     }
 
     return cons->cdr;
 }
 
 char cons_item(int i, Cons *cons) {
-    if (cons == NULL) {
+    if (cons_is_empty(cons)) {
         return '\0';
     } else if (i == 0) {
         return cons->car;
@@ -106,9 +110,9 @@ char cons_item(int i, Cons *cons) {
 }
 
 char cons_last(Cons *cons) {
-    if (cons == NULL) {
+    if (cons_is_empty(cons)) {
         return '\0';
-    } else if (cons->cdr == NULL) {
+    } else if (cons_is_empty(cons->cdr)) {
         return cons->car;
     }
 
@@ -116,7 +120,7 @@ char cons_last(Cons *cons) {
 }
 
 int cons_length(Cons *cons) {
-    if (cons == NULL) {
+    if (cons_is_empty(cons)) {
         return 0;
     }
 
@@ -125,8 +129,8 @@ int cons_length(Cons *cons) {
 
 Cons *cons_take(int n, Cons *cons) {
     if (n <= 0) {
-        return NULL;
-    } else if (cons->cdr == NULL) {
+        return cons_empty();
+    } else if (cons_is_empty(cons->cdr)) {
         return cons;
     }
 
@@ -138,7 +142,7 @@ Cons *cons_init(Cons *cons) {
 }
 
 Cons *cons_drop(int n, Cons *cons) {
-    if (cons == NULL || n == 0) {
+    if (cons_is_empty(cons) || n == 0) {
         return cons;
     }
 
@@ -146,9 +150,9 @@ Cons *cons_drop(int n, Cons *cons) {
 }
 
 bool cons_equal(Cons *cons_a, Cons *cons_b) {
-    if (cons_a == NULL && cons_b == NULL) {
+    if (cons_is_empty(cons_a) && cons_is_empty(cons_b)) {
         return true;
-    } else if (cons_a == NULL || cons_b == NULL) {
+    } else if (cons_is_empty(cons_a) || cons_is_empty(cons_b)) {
         return false;
     } else if (cons_a->car != cons_b->car) {
         return false;
@@ -158,7 +162,7 @@ bool cons_equal(Cons *cons_a, Cons *cons_b) {
 }
 
 Cons *cons_add(Cons *cons_a, Cons *cons_b) {
-    if (cons_a == NULL) {
+    if (cons_is_empty(cons_a)) {
         return cons_b;
     }
 
@@ -166,8 +170,8 @@ Cons *cons_add(Cons *cons_a, Cons *cons_b) {
 }
 
 Cons *cons_trim(Cons *cons) {
-    if (cons == NULL) {
-        return NULL;
+    if (cons_is_empty(cons)) {
+        return cons_empty();
     } else if (cons_is_white_space(cons->car)) {
         return cons_trim(cons->cdr);
     } else if (cons_is_white_space(cons_last(cons))) {
@@ -185,10 +189,10 @@ bool cons_is_white_space(char c) {
 }
 
 Cons *cons_list(int n, Cons *cons) {
-    if (cons == NULL) {
-        return NULL;
+    if (cons_is_empty(cons)) {
+        return cons_empty();
     } else if (n == 0 && cons_is_white_space(cons->car)) {
-        return NULL;
+        return cons_empty();
     } else if (n == 0) {
         return cons_new(cons->car, cons_list(n, cons->cdr));
     } else if (cons_is_white_space(cons->car)
