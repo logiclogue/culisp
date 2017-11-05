@@ -22,9 +22,9 @@ int main(int n, char *args[n]) {
 
 void test(void) {
     cons_test();
+    cons_list_test();
     interpret_test();
     prelude_test();
-    cons_list_test();
 
     printf("All tests pass :)\n");
 }
