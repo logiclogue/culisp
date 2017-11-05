@@ -61,7 +61,9 @@ Result interpret_function(Cons *cons) {
 
     if (cons_equal(cons_list(0, without_brackets), cons_from_string("add"))) {
         return Result_valid(prelude_add(cons_list(1, without_brackets), cons_list(2, without_brackets)));
-    };
+    } else if (cons_equal(cons_list(0, without_brackets), cons_from_string("minus"))) {
+        return Result_valid(prelude_minus(cons_list(1, without_brackets), cons_list(2, without_brackets)));
+    }
 
     return Result_invalid();
 }
