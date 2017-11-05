@@ -50,20 +50,10 @@ Result interpret_name(Cons *cons) {
 }
 
 Result interpret_function(Cons *cons) {
-    Cons *without_brackets = cons_tail(cons_init(cons));
-    Cons *with_brackets = cons_add(
-        cons_add(cons_from_string("("),
-        without_brackets),
-        cons_from_string(")"));
-
-    if (!cons_equal(cons, with_brackets)) {
-        return Result_invalid();
-    }
-
-    if (cons_equal(cons_list_item(0, without_brackets), cons_from_string("add"))) {
-        return Result_valid(prelude_add(cons_list_item(1, without_brackets), cons_list_item(2, without_brackets)));
-    } else if (cons_equal(cons_list_item(0, without_brackets), cons_from_string("minus"))) {
-        return Result_valid(prelude_minus(cons_list_item(1, without_brackets), cons_list_item(2, without_brackets)));
+    if (cons_equal(cons_list_item(0, cons), cons_from_string("add"))) {
+        return Result_valid(prelude_add(cons_list_item(1, cons), cons_list_item(2, cons)));
+    } else if (cons_equal(cons_list_item(0, cons), cons_from_string("minus"))) {
+        return Result_valid(prelude_minus(cons_list_item(1, cons), cons_list_item(2, cons)));
     }
 
     return Result_invalid();
