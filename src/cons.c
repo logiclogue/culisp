@@ -7,6 +7,10 @@
 Cons *cons_new(char value, Cons *cons) {
     Cons *self = malloc(sizeof(Cons));
 
+    static int total = 0;
+
+    total += 1;
+
     self->car = value;
     self->cdr = cons;
 
@@ -55,6 +59,10 @@ void destroy_cons(Cons *cons) {
     if (cons_is_empty(cons)) {
         return;
     }
+
+    static int total = 0;
+
+    total += 1;
 
     destroy_cons(cons->cdr);
     free(cons);
