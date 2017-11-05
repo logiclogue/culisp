@@ -100,9 +100,15 @@ int cons_to_int(Cons *cons) {
 }
 
 bool cons_to_bool(Cons *cons) {
-    if (cons_equal(cons, cons_from_string("#t"))) {
+    Cons *truth = cons_from_string("#t");
+
+    if (cons_equal(cons, truth)) {
+        destroy_cons(truth);
+
         return true;
     }
+
+    destroy_cons(truth);
 
     return false;
 }

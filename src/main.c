@@ -1,13 +1,17 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "cons.h"
 #include "cons_list.h"
 #include "interpret.h"
 #include "prelude.h"
 
 void test(void);
+void repl(void);
 
 int main(int n, char *args[n]) {
     Cons *cons;
+
+    repl();
 
     if (n == 1) {
         test();
@@ -18,6 +22,26 @@ int main(int n, char *args[n]) {
     }
 
     return 0;
+}
+
+void repl(void) {
+    int line_size = 1024;
+    char *line = malloc(line_size);
+    Result result;
+
+    while (true) {
+        printf("culisp> ");
+
+        fgets(line, line_size, stdin);
+
+        result = interpret(cons_from_string(line));
+
+        if (result.valid) {
+            printf("%s\n", cons_to_string(result.value));
+        } else {
+            printf("Invalid input\n");
+        }
+    }
 }
 
 void test(void) {
