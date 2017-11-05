@@ -16,6 +16,8 @@ Result interpret(Cons *cons) {
         return Result_invalid();
     } else if (interpret_number(cons).valid) {
         return interpret_number(cons);
+    } else if (interpret_bool(cons).valid) {
+        return interpret_bool(cons);
     } else if (interpret_name(cons).valid) {
         return interpret_name(cons);
     } else if (interpret_function(cons).valid) {
@@ -45,6 +47,19 @@ Result interpret_name(Cons *cons) {
     if (cons_is_empty(cons)) {
         return Result_invalid();
     } else if (cons_all(is_alpha, cons)) {
+        return Result_valid(cons);
+    }
+
+    return Result_invalid();
+}
+
+Result interpret_bool(Cons *cons) {
+    if (cons_is_empty(cons)) {
+        return Result_invalid();
+    } else if (cons_length(cons) != 2) {
+        return Result_invalid();
+    } else if (cons->car == '#'
+               && (cons->cdr->car == 't' || cons->cdr->car == 'f')) {
         return Result_valid(cons);
     }
 
@@ -116,4 +131,6 @@ void interpret_test(void) {
         interpret(cons_from_string("(add (add 10 10) 10)")).value,
         cons_from_int(30)));
     assert(interpret(cons_from_string("(id add)")).valid);
+    assert(interpret(cons_from_string("#t")).valid);
+    assert(interpret(cons_from_string("#f")).valid);
 }
