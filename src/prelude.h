@@ -5,7 +5,7 @@
 
 Cons *prelude_add(Cons *cons_a, Cons *cons_b);
 Cons *prelude_minus(Cons *cons_a, Cons *cons_b);
-//Cons *prelude_id(Cons *cons);
+Cons *prelude_id(Cons *cons);
 void prelude_test(void);
 
 #endif

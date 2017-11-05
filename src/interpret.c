@@ -55,19 +55,31 @@ Result interpret_function(Cons *cons) {
     Result command = interpret(cons_list_item(0, cons));
     Result first_param = interpret(cons_list_item(1, cons));
     Result second_param = interpret(cons_list_item(2, cons));
+    int length = cons_list_length(cons);
 
-    if (!command.valid || !first_param.valid || !second_param.valid) {
+    if (!command.valid) {
         return Result_invalid();
     }
 
-    if (cons_equal(command.value, cons_from_string("add"))) {
+    if (cons_equal(command.value, cons_from_string("add"))
+        && first_param.valid
+        && second_param.valid
+        && length == 3) {
         return Result_valid(prelude_add(
             first_param.value,
             second_param.value));
-    } else if (cons_equal(command.value, cons_from_string("minus"))) {
+    } else if (cons_equal(command.value, cons_from_string("minus"))
+        && first_param.valid
+        && second_param.valid
+        && length == 3) {
         return Result_valid(prelude_minus(
             first_param.value,
             second_param.value));
+    } else if (cons_equal(command.value, cons_from_string("id"))
+        && first_param.valid
+        && length == 2) {
+        return Result_valid(prelude_id(
+            first_param.value));
     }
 
     return Result_invalid();
@@ -96,4 +108,5 @@ void interpret_test(void) {
     assert(cons_equal(
         interpret(cons_from_string("(add (add 10 10) 10)")).value,
         cons_from_int(30)));
+    assert(interpret(cons_from_string("(id add)")).valid);
 }
