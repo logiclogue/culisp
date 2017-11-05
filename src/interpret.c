@@ -8,6 +8,16 @@ static bool is_digit(char value) {
     return value >= '0' && value <= '9';
 }
 
+Result interpret(Cons *cons) {
+    if (interpret_number(cons).valid) {
+        return interpret_number(cons);
+    } else if (interpret_name(cons).valid) {
+        return interpret_name(cons);
+    }
+
+    return Result_invalid();
+}
+
 Result interpret_number(Cons *cons) {
     if (cons_is_empty(cons)) {
         return Result_invalid();
@@ -43,4 +53,7 @@ void interpret_test(void) {
     assert(interpret_name(cons_from_string("JORDAN")).valid);
     assert(!interpret_name(cons_from_string("j0rdan")).valid);
     assert(!interpret_name(cons_from_string("")).valid);
+    assert(!interpret(cons_from_string("")).valid);
+    assert(interpret(cons_from_string("123")).valid);
+    assert(interpret(cons_from_string("jordan")).valid);
 }
