@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include "cons.h"
+#include "cons_list.h"
 #include "interpret.h"
 #include "prelude.h"
 
@@ -23,6 +24,7 @@ void test(void) {
     cons_test();
     interpret_test();
     prelude_test();
+    cons_list_test();
 
     printf("All tests pass :)\n");
 }
