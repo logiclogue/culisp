@@ -12,7 +12,9 @@ static bool is_digit(char value) {
 }
 
 Result interpret(Cons *cons) {
-    if (interpret_number(cons).valid) {
+    if (cons_is_empty(cons)) {
+        return Result_invalid();
+    } else if (interpret_number(cons).valid) {
         return interpret_number(cons);
     } else if (interpret_name(cons).valid) {
         return interpret_name(cons);
