@@ -70,6 +70,7 @@ Result interpret_function(Cons *cons) {
     Result command = interpret(cons_list_item(0, cons));
     Result first_param = interpret(cons_list_item(1, cons));
     Result second_param = interpret(cons_list_item(2, cons));
+    Result third_param = interpret(cons_list_item(3, cons));
     int length = cons_list_length(cons);
 
     if (!command.valid) {
@@ -98,10 +99,24 @@ Result interpret_function(Cons *cons) {
     } else if (cons_equal(command.value, cons_from_string("multiply"))
         && first_param.valid
         && second_param.valid
-        && length == 2) {
+        && length == 3) {
         return Result_valid(prelude_multiply(
             first_param.value,
             second_param.value));
+    } else if (cons_equal(command.value, cons_from_string("equal"))
+        && first_param.valid
+        && second_param.valid
+        && length == 3) {
+        return Result_valid(prelude_equal(
+            first_param.value,
+            second_param.value));
+    } else if (cons_equal(command.value, cons_from_string("if"))
+        && first_param.valid && second_param.valid && third_param.valid
+        && length == 4) {
+        return Result_valid(prelude_if(
+            first_param.value,
+            second_param.value,
+            third_param.value));
     }
 
     return Result_invalid();

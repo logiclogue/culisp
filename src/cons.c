@@ -55,6 +55,14 @@ Cons *cons_from_int(int i) {
     return cons;
 }
 
+Cons *cons_from_bool(bool b) {
+    if (b) {
+        return cons_from_string("#t");
+    }
+
+    return cons_from_string("#f");
+}
+
 void destroy_cons(Cons *cons) {
     if (cons_is_empty(cons)) {
         return;
@@ -89,6 +97,14 @@ int cons_to_int(Cons *cons) {
     free(string);
 
     return value;
+}
+
+bool cons_to_bool(Cons *cons) {
+    if (cons_equal(cons, cons_from_string("#t"))) {
+        return true;
+    }
+
+    return false;
 }
 
 char cons_head(Cons *cons) {
@@ -256,4 +272,9 @@ void cons_test(void) {
     assert(!cons_all(cons_is_white_space, cons_from_string(" a ")));
     assert(cons_to_int(cons_from_string("123")) == 123);
     assert(cons_equal(cons_from_int(123), cons_from_string("123")));
+    assert(cons_equal(cons_from_bool(true), cons_from_string("#t")));
+    assert(cons_equal(cons_from_bool(false), cons_from_string("#f")));
+    assert(cons_to_bool(cons_from_string("#t")));
+    assert(!cons_to_bool(cons_from_string("#f")));
+    assert(!cons_to_bool(cons_from_string("blah")));
 }
