@@ -7,6 +7,7 @@
 Result interpret(Cons *cons);
 Result interpret_number(Cons *cons);
 Result interpret_name(Cons *cons);
+Result interpret_function(Cons *cons);
 void interpret_test(void);
 
 #endif
