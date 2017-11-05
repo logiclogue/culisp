@@ -11,9 +11,12 @@ void repl(void);
 int main(int n, char *args[n]) {
     Cons *cons;
 
-    repl();
-
     if (n == 1) {
+        repl();
+    } else if (n == 2
+        && cons_equal(
+            cons_from_string(args[1]),
+            cons_from_string("test"))) {
         test();
     } else if (n == 2) {
         cons = interpret(cons_from_string(args[1])).value;
@@ -29,9 +32,9 @@ void repl(void) {
     char *line = malloc(line_size);
     Result result;
 
-    while (true) {
+    while (!feof(stdin)) {
         printf("culisp> ");
-
+        
         fgets(line, line_size, stdin);
 
         result = interpret(cons_from_string(line));
