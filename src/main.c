@@ -5,8 +5,16 @@
 
 void test(void);
 
-int main(void) {
-    test();
+int main(int n, char *args[n]) {
+    Cons *cons;
+
+    if (n == 1) {
+        test();
+    } else if (n == 2) {
+        cons = interpret(cons_from_string(args[1])).value;
+
+        printf("%s\n", cons_to_string(cons));
+    }
 
     return 0;
 }

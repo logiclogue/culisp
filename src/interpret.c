@@ -15,6 +15,8 @@ Result interpret(Cons *cons) {
         return interpret_number(cons);
     } else if (interpret_name(cons).valid) {
         return interpret_name(cons);
+    } else if (interpret_function(cons).valid) {
+        return interpret_function(cons);
     }
 
     return Result_invalid();
@@ -80,5 +82,8 @@ void interpret_test(void) {
     assert(interpret_function(cons_from_string("(add 1 2)")).valid);
     assert(cons_equal(
         interpret_function(cons_from_string("(add 1 2)")).value,
+        cons_from_string("3")));
+    assert(cons_equal(
+        interpret(cons_from_string("(add 1 2)")).value,
         cons_from_string("3")));
 }
