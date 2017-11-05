@@ -80,6 +80,13 @@ Result interpret_function(Cons *cons) {
         && length == 2) {
         return Result_valid(prelude_id(
             first_param.value));
+    } else if (cons_equal(command.value, cons_from_string("multiply"))
+        && first_param.valid
+        && second_param.valid
+        && length == 2) {
+        return Result_valid(prelude_multiply(
+            first_param.value,
+            second_param.value));
     }
 
     return Result_invalid();
