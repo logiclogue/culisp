@@ -54,3 +54,7 @@ If statement returning function name
 ## Author
 
 Jordan Lord
+
+## License
+
+MIT
