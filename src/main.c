@@ -28,23 +28,39 @@ int main(int n, char *args[n]) {
 }
 
 void repl(void) {
-    int line_size = 1024;
-    char *line = malloc(line_size);
     Result result;
+    Cons *previous_cons;
+    char current_char;
+    bool is_new_line = false;
 
-    while (!feof(stdin)) {
-        printf("culisp> ");
-        
-        fgets(line, line_size, stdin);
+    printf("culisp> ");
 
-        result = interpret(cons_from_string(line));
+    while (!is_new_line) {
+        current_char = fgetc(stdin);
 
-        if (result.valid) {
-            printf("%s\n", cons_to_string(result.value));
+        if (current_char == '\n') {
+            is_new_line = true;
         } else {
-            printf("Invalid input\n");
+            printf("%c\n", fgetc(stdin));
         }
     }
+
+    printf("ENDEDN\n");
+
+    //while (!feof(stdin)) {
+    //    printf("culisp> ");
+    //    
+    //    fgets(line, line_size, stdin);
+    //    printf("HERE\n");
+
+    //    result = interpret(cons_from_string(line));
+
+    //    if (result.valid) {
+    //        printf("%s\n", cons_to_string(result.value));
+    //    } else {
+    //        printf("Invalid input\n");
+    //    }
+    //}
 }
 
 void test(void) {
