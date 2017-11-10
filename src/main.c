@@ -28,39 +28,26 @@ int main(int n, char *args[n]) {
 }
 
 void repl(void) {
-    Result result;
-    Cons *previous_cons;
+    Cons *cons = cons_empty();
     char current_char;
-    bool is_new_line = false;
 
     printf("culisp> ");
 
-    while (!is_new_line) {
+    while (current_char != '\n') {
         current_char = fgetc(stdin);
 
-        if (current_char == '\n') {
-            is_new_line = true;
-        } else {
-            printf("%c\n", fgetc(stdin));
-        }
+        cons = cons_add(cons, cons_new(current_char, cons_empty()));
     }
 
-    printf("ENDEDN\n");
+    Result result = interpret(cons);
 
-    //while (!feof(stdin)) {
-    //    printf("culisp> ");
-    //    
-    //    fgets(line, line_size, stdin);
-    //    printf("HERE\n");
+    if (result.valid) {
+        printf("%s\n", cons_to_string(result.value));
+    } else {
+        printf("Invalid input\n");
+    }
 
-    //    result = interpret(cons_from_string(line));
-
-    //    if (result.valid) {
-    //        printf("%s\n", cons_to_string(result.value));
-    //    } else {
-    //        printf("Invalid input\n");
-    //    }
-    //}
+    repl();
 }
 
 void test(void) {
