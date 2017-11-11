@@ -24,7 +24,7 @@ static Cons *_cons_list_item(int brackets, int n, Cons *cons) {
             cons->car,
             _cons_list_item(brackets, n, cons->cdr));
     } else if (cons_is_white_space(cons->car)
-            && cons_is_white_space(cons->cdr->car)
+            && cons_is_white_space(cons_head(cons_tail(cons)))
             && brackets == 1) {
         return _cons_list_item(brackets, n, cons->cdr);
     } else if (cons_is_white_space(cons->car) && brackets == 1) {
