@@ -44,15 +44,11 @@ Cons *cons_from_string(char *s) {
 }
 
 Cons *cons_from_int(int i) {
-    char *output = malloc(sizeof(char) * 100);
+    char output[100];
 
     sprintf(output, "%d", i);
 
-    Cons *cons = cons_from_string(output);
-
-    free(output);
-
-    return cons;
+    return cons_from_string(output);
 }
 
 Cons *cons_from_bool(bool b) {
