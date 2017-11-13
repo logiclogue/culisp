@@ -9,6 +9,7 @@ Cons *prelude_multiply(Cons *cons_a, Cons *cons_b);
 Cons *prelude_equal(Cons *cons_a, Cons *cons_b);
 Cons *prelude_if(Cons *cond, Cons *cons_a, Cons *cons_b);
 Cons *prelude_id(Cons *cons);
+Cons *prelude_eval(Cons *cons);
 void prelude_test(void);
 
 #endif

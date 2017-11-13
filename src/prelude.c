@@ -1,6 +1,7 @@
 #include <assert.h>
 #include "prelude.h"
 #include "cons.h"
+#include "interpret.h"
 
 Cons *prelude_add(Cons *cons_a, Cons *cons_b) {
     int int_a = cons_to_int(cons_a);
@@ -39,6 +40,10 @@ Cons *prelude_if(Cons *cond, Cons *cons_a, Cons *cons_b) {
     return cons_b;
 }
 
+Cons *prelude_eval(Cons *cons) {
+    return interpret(cons).value;
+}
+
 void prelude_test(void) {
     assert(cons_equal(
         prelude_add(cons_from_int(2), cons_from_int(3)),
@@ -64,4 +69,7 @@ void prelude_test(void) {
     assert(cons_equal(
         prelude_if(cons_from_bool(false), cons_from_int(1), cons_from_int(2)),
         cons_from_int(2)));
+    assert(cons_equal(
+        prelude_eval(cons_from_string("(if #t 1 2)")),
+        cons_from_int(1)));
 }

@@ -117,6 +117,10 @@ Result interpret_function(Cons *cons) {
             first_param.value,
             second_param.value,
             third_param.value));
+    } else if (cons_equal(command.value, cons_from_string("eval"))
+        && first_param.valid
+        && length == 2) {
+        return Result_valid(prelude_eval(first_param.value));
     }
 
     return Result_invalid();
