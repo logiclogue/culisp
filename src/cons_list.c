@@ -2,7 +2,7 @@
 #include <stdbool.h>
 #include "cons_list.h"
 
-static Cons *_cons_list_item(int brackets, int n, Cons *cons) {
+static Cons *list_item(int brackets, int n, Cons *cons) {
     if (cons_is_empty(cons)) {
         return cons_empty();
     }
@@ -14,7 +14,7 @@ static Cons *_cons_list_item(int brackets, int n, Cons *cons) {
     }
 
     if (cons->car == '(' && brackets == 1) {
-        return _cons_list_item(brackets, n, cons->cdr);
+        return list_item(brackets, n, cons->cdr);
     } else if (brackets == 0) {
         return cons_empty();
     } else if (n == 0 && cons_is_white_space(cons->car) && brackets == 1) {
@@ -22,20 +22,20 @@ static Cons *_cons_list_item(int brackets, int n, Cons *cons) {
     } else if (n == 0 && brackets >= 1) {
         return cons_new(
             cons->car,
-            _cons_list_item(brackets, n, cons->cdr));
+            list_item(brackets, n, cons->cdr));
     } else if (cons_is_white_space(cons->car)
             && cons_is_white_space(cons_head(cons_tail(cons)))
             && brackets == 1) {
-        return _cons_list_item(brackets, n, cons->cdr);
+        return list_item(brackets, n, cons->cdr);
     } else if (cons_is_white_space(cons->car) && brackets == 1) {
-        return _cons_list_item(brackets, n - 1, cons->cdr);
+        return list_item(brackets, n - 1, cons->cdr);
     }
 
-    return _cons_list_item(brackets, n, cons->cdr);
+    return list_item(brackets, n, cons->cdr);
 }
 
 Cons *cons_list_item(int n, Cons *cons) {
-    return _cons_list_item(0, n, cons);
+    return list_item(0, n, cons);
 }
 
 static int _cons_list_length(int n, Cons *cons) {
