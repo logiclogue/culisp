@@ -34,6 +34,14 @@ static Cons *list_item(int brackets, int n, Cons *cons) {
     return list_item(brackets, n, cons->cdr);
 }
 
+static Cons *match_escaped(Cons *cons) {
+    if (cons_is_empty(cons)) {
+        return cons;
+    }
+
+    return cons_new(cons->car, cons_empty());
+}
+
 Cons *cons_list_item(int n, Cons *cons) {
     return list_item(0, n, cons);
 }
