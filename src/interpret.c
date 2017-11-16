@@ -14,14 +14,30 @@ static bool is_digit(char value) {
 Result interpret(Cons *cons) {
     if (cons_is_empty(cons)) {
         return Result_invalid();
-    } else if (interpret_number(cons).valid) {
-        return interpret_number(cons);
-    } else if (interpret_bool(cons).valid) {
-        return interpret_bool(cons);
-    } else if (interpret_name(cons).valid) {
-        return interpret_name(cons);
-    } else if (interpret_function(cons).valid) {
-        return interpret_function(cons);
+    }
+
+    Result number_result = interpret_number(cons);
+    
+    if (number_result.valid) {
+        return number_result;
+    }
+
+    Result bool_result = interpret_bool(cons);
+    
+    if (bool_result.valid) {
+        return bool_result;
+    }
+
+    Result name_result = interpret_name(cons);
+    
+    if (name_result.valid) {
+        return name_result;
+    }
+    
+    Result function_result = interpret_function(cons);
+    
+    if (function_result.valid) {
+        return function_result;
     }
 
     return Result_invalid();
